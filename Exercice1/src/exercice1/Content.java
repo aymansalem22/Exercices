@@ -1,7 +1,7 @@
 package exercice1;
 
 public abstract class Content {
-
+//ok
 	private int id;
 	private String name;
 	private String dateOfReproduction;
