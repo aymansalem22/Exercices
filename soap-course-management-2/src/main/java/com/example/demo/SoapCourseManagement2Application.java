@@ -9,5 +9,5 @@ public class SoapCourseManagement2Application {
 	public static void main(String[] args) {
 		SpringApplication.run(SoapCourseManagement2Application.class, args);
 	}
-
+//OK
 }
