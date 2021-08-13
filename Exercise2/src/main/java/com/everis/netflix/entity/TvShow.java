@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -36,9 +40,15 @@ public class TvShow implements Serializable {
 	
 	private String advertising;
 	
-	@ManyToOne
-	@JoinColumn(name="category_id")
-	private Category category;
+
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JsonIgnore
+	@JoinTable(name = "tv_shows_has_categories",
+			joinColumns = { @JoinColumn(name = "tv_shows_ID") },
+			inverseJoinColumns = { @JoinColumn(name = "categories_ID") })
+	private List<Category> categories;
+
 	
 	@OneToMany(mappedBy="tvshows")
 	private List<Season> seasons = new ArrayList<>();
@@ -73,14 +83,7 @@ public class TvShow implements Serializable {
 	}
 
 
-	public Category getCategory() {
-		return category;
-	}
 
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
 
 
 	public List<Season> getSeasons() {
@@ -116,6 +119,18 @@ public class TvShow implements Serializable {
 	public void setLong_description(String long_description) {
 		this.long_description = long_description;
 	}
+	
+	
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
 
 	public String getYear() {
 		return year;
@@ -146,8 +161,11 @@ public class TvShow implements Serializable {
 	public String toString() {
 		return "TvShow [id=" + id + ", name=" + name + ", short_description=" + short_description
 				+ ", long_description=" + long_description + ", year=" + year + ", recomended_age=" + recomended_age
-				+ ", advertising=" + advertising + ", category=" + category + ", seasons=" + seasons + "]";
+				+ ", advertising=" + advertising + ", categories=" + categories + ", seasons=" + seasons + "]";
 	}
+
+
+
 
 
 	

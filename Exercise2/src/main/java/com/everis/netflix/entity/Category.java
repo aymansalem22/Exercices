@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -27,7 +30,8 @@ public class Category implements Serializable {
 	private String name;
 
 	
-	@OneToMany(mappedBy="category",cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "categories")
+	@JsonIgnore
 	private List<TvShow> TvShows = new ArrayList<TvShow>();
 	
 	
